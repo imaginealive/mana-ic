@@ -47,6 +47,6 @@ namespace ManaIC.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task Update(LotteryIC document) => await Collection.ReplaceOneAsync(it => it.id == document.id, document);
+        public async Task Update(LotteryIC document) => await Collection.ReplaceOneAsync(it => it.Id == document.Id, document);
     }
 }

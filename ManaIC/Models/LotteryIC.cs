@@ -7,7 +7,7 @@ namespace ManaIC.Models
 {
     public class LotteryIC
     {
-        public string id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Faculty { get; set; }
         public DateTime? DeleteDate { get; set; }

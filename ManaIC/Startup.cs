@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ManaIC.Models;
+using ManaIC.Repositories.Contracts;
+using ManaIC.Repositories;
 
 namespace ManaIC
 {
@@ -39,6 +41,7 @@ namespace ManaIC
             var dbConfig = Configuration.GetSection(nameof(DbConfig)).Get<DbConfig>();
             services.AddTransient(it => dbConfig);
             services.AddTransient(it => webConfig);
+            services.AddTransient<IDataDac<LotteryIC>, LotteryICDac>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ManaIC.Repositories.Contracts
 {
-    interface IDataDac<T>
+    public interface IDataDac<T>
     {
         IMongoCollection<T> Collection { get; }
         Task<T> Get(Expression<Func<T, bool>> expression);
