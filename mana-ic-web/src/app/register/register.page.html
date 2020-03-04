@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="fg" (ngSubmit)="submit()">
+    <ion-item margin-top no-lines>
+      <h2>ลงชื่อลุ้นรับรางวัลกับวิทยาลัยนานาชาติ (International College)</h2>
+    </ion-item>
+    <ion-item padding-right mode="ios" no-lines>
+      <ion-label fixed mode="ios">ชื่อ-นามสกุล</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item padding-right mode="ios" no-lines>
+      <ion-label fixed mode="ios">คณะ</ion-label>
+      <ion-input type="text" formControlName="faculty"></ion-input>
+    </ion-item>
+    <button id="app-form-submit" type="submit" color="danger" [disabled]="fg.invalid" ion-button full no-margin>ลงชื่อ</button>
+  </form>
+</ion-content>
