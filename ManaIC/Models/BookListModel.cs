@@ -12,6 +12,7 @@ namespace ManaIC.Models
         public string NameEN { get; set; }
         public string Status { get; set; }
         public string Affiliation { get; set; }
+        public string Faculty { get; set; }
         public string KKUStudentID { get; set; }
         public bool RegisterROV { get; set; }
         public string ROVTeam { get; set; }

@@ -13,11 +13,19 @@ namespace ManaIC.Controllers
     [ApiController]
     public class ServiceAPIController : ControllerBase
     {
+        private readonly DateTime FirstDate;
+        private readonly DateTime SecondDate;
+        private readonly DateTime ThirdDate;
         private readonly IDataDac<BookListModel> booklistDac;
 
         public ServiceAPIController(IDataDac<BookListModel> booklistDac)
         {
             this.booklistDac = booklistDac;
+            FirstDate = new DateTime(2020, 3, 9);
+            SecondDate = new DateTime(2020, 3, 10);
+            ThirdDate = new DateTime(2020, 3, 11);
+            //thailand time
+            //var date = DateTime.UtcNow.AddHours(7);
         }
 
         // GET: api/ServiceAPI
@@ -28,11 +36,12 @@ namespace ManaIC.Controllers
             return response;
         }
 
-        // GET: api/ServiceAPI/5
-        [HttpGet("{id}")]
-        public async Task<BookListModel> Get(string id)
+        // GET: api/ServiceAPI/get?memberid=5
+        [HttpGet("get")]
+        public async Task<BookListModel> Get(string memberid)
         {
-            var response = await booklistDac.Get(it => it.Id == id && !it.DeleteDate.HasValue);
+            var response = await booklistDac.Get(it => it.Id == memberid && !it.DeleteDate.HasValue);
+            if (response == null) response = new BookListModel { Id = memberid };
             return response;
         }
 
@@ -40,8 +49,18 @@ namespace ManaIC.Controllers
         [HttpPost()]
         public async Task Post(BookListModel request)
         {
-            request.Id = DateTime.UtcNow.Ticks.ToString();
-            await booklistDac.Create(request);
+            DateTime? dateTH = DateTime.UtcNow.AddHours(7);
+            request.FirstDate = FirstDate == dateTH.Value.Date ? dateTH : null;
+            request.SecondDate = SecondDate == dateTH.Value.Date ? dateTH : null;
+            request.ThirdDate = ThirdDate == dateTH.Value.Date ? dateTH : null;
+            var book = await booklistDac.Get(it => it.Id == request.Id);
+            if (book == null) {
+                request.CreateDate = DateTime.UtcNow;
+                await booklistDac.Create(request);
+            }
+            else
+                await booklistDac.Update(request);
+
         }
 
         // PUT: api/ServiceAPI/5
@@ -56,9 +75,9 @@ namespace ManaIC.Controllers
         [HttpDelete("{id}")]
         public async Task Delete(string id)
         {
-            var lottery = await booklistDac.Get(it => it.Id == id);
-            lottery.DeleteDate = DateTime.UtcNow;
-            await booklistDac.Update(lottery);
+            var book = await booklistDac.Get(it => it.Id == id);
+            book.DeleteDate = DateTime.UtcNow;
+            await booklistDac.Update(book);
         }
     }
 }
