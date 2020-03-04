@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +10,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 export class RegisterPage implements OnInit {
 
   public fg: FormGroup;
-  engName:string;
+  engName: string;
   statusType: string;
   Student: string = "Student";
   Scholar: string = "Scholar";
@@ -22,7 +23,7 @@ export class RegisterPage implements OnInit {
   isCosplay: Boolean = false;
   isRov: Boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public registerSvc: RegisterService) {
     this.fg = this.fb.group({
       'nameTH': [null, Validators.required],
       'status': [this.statusType, Validators.required],
@@ -31,20 +32,44 @@ export class RegisterPage implements OnInit {
       'faculty': null,
       'KKUStudentID': null,
       'registerPoster': this.isPoster,
-      'posterTeam': null, 
+      'posterTeam': null,
       'registerMovie': this.isMovie,
       'movieTeam': null,
       'registerCosplay': this.isCosplay,
-      'nickname':null,
-      'refCharacter':null,
+      'nickname': null,
+      'refCharacter': null,
       'registerROV': this.isRov,
-      'ROVTeam':null,
+      'ROVTeam': null,
     });
   }
 
   async ngOnInit() { }
 
   submit() {
-    console.log(this.fg.value)
+    if (this.fg.valid) {
+      this.registerSvc.createRegister(this.fg.value).then(data => {
+        console.log(data);
+        }, error => {
+          console.log(error);
+        });
+      ;
+    }
+
+    // if (this.fg.valid) {
+
+
+    //   var headers = new Headers();
+    //   headers.append("Accept", 'application/json');
+    //   headers.append('Content-Type', 'application/json');
+
+    //   this.httpClient.post("https://localhost:44314/api/serviceapi", this.fg.value)
+    //     .subscribe(data => {
+    //       console.log(data['_body']);
+    //     }, error => {
+    //       console.log(error);
+    //     });
+    // }
   }
+
+
 }
