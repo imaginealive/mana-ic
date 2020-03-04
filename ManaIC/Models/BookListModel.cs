@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ManaIC.Models
 {
-    public class BookListModel
+    public class BookList
     {
         public string Id { get; set; }
         public string NameTH { get; set; }
