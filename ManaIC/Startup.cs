@@ -41,7 +41,7 @@ namespace ManaIC
             var dbConfig = Configuration.GetSection(nameof(DbConfig)).Get<DbConfig>();
             services.AddTransient(it => dbConfig);
             services.AddTransient(it => webConfig);
-            services.AddTransient<IDataDac<LotteryIC>, LotteryICDac>();
+            services.AddTransient<IDataDac<BookListModel>, BookListDac>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
