@@ -6,17 +6,58 @@
 
 <ion-content>
   <form [formGroup]="fg" (ngSubmit)="submit()">
-    <ion-item margin-top no-lines>
-      <h2>ลงชื่อลุ้นรับรางวัลกับวิทยาลัยนานาชาติ (International College)</h2>
+    <ion-list mode="ios">
+      <ion-list-header>
+        <ion-label>ลงทะเบียน CA</ion-label>
+      </ion-list-header>
+      <ion-item mode="ios" no-lines>
+        <ion-label position="stacked" mode="ios">ชื่อ-นามสกุล</ion-label>
+        <ion-input type="text" formControlName="nameTH"></ion-input>
+      </ion-item>
+      <ion-radio-group value="biff">
+        <ion-list-header>
+          <ion-label>ประเภท</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>นักเรียน</ion-label>
+          <ion-radio slot="start" value="Student"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>นักศึกษา</ion-label>
+          <ion-radio slot="start" value="Scholar"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>บุคคลทั่วไป</ion-label>
+          <ion-radio slot="start" value="Guest"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+      <ion-radio-group value="biff">
+        <ion-list-header>
+          <ion-label>มหาวิทยาลัย</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>มหาวิทยาลัยขอนแก่น</ion-label>
+          <ion-radio slot="start" value="KKU"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>มหาวิทยาลัย อื่นๆ</ion-label>
+          <ion-radio slot="start" value="Other"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+    <ion-item mode="ios" no-lines>
+      <ion-label position="stacked" mode="ios">ชื่อโรงเรียน หรือ ชื่อมหาวิทยาลัย</ion-label>
+      <ion-input type="text"></ion-input>
     </ion-item>
-    <ion-item padding-right mode="ios" no-lines>
-      <ion-label fixed mode="ios">ชื่อ-นามสกุล</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
+    <ion-item mode="ios" no-lines>
+      <ion-label position="stacked" mode="ios">คณะ</ion-label>
+      <ion-input type="text"></ion-input>
     </ion-item>
-    <ion-item padding-right mode="ios" no-lines>
-      <ion-label fixed mode="ios">คณะ</ion-label>
-      <ion-input type="text" formControlName="faculty"></ion-input>
+    <ion-item mode="ios" no-lines>
+      <ion-label position="stacked" mode="ios">รหัสนักศึกษา</ion-label>
+      <ion-input type="number"></ion-input>
     </ion-item>
-    <button id="app-form-submit" type="submit" color="danger" [disabled]="fg.invalid" ion-button full no-margin>ลงชื่อ</button>
+    <ion-button id="app-form-submit" type="submit" color="danger" [disabled]="fg.invalid" expand="full">สมัคร
+    </ion-button>
   </form>
 </ion-content>

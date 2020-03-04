@@ -12,8 +12,7 @@ export class RegisterPage implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.fg = this.fb.group({
-      'name': new FormControl('', Validators.required),
-      'faculty': new FormControl('', Validators.required)
+      'nameTH': [null, Validators.required],
     });
   }
 
