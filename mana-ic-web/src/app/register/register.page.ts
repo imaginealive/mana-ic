@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 export class RegisterPage implements OnInit {
 
   public fg: FormGroup;
+  engName:string;
   statusType: string;
   Student: string = "Student";
   Scholar: string = "Scholar";
@@ -16,15 +17,28 @@ export class RegisterPage implements OnInit {
   universityType: string;
   kku: string = "kku";
   other: string = "other";
+  isPoster: Boolean = false;
+  isMovie: Boolean = false;
+  isCosplay: Boolean = false;
+  isRov: Boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.fg = this.fb.group({
       'nameTH': [null, Validators.required],
       'status': [this.statusType, Validators.required],
-      'registerPoster': Boolean,
-      'registerMovie': Boolean,
-      'registerCosplay': Boolean,
-      'registerROV': Boolean,
+      'nameEN': this.engName,
+      'affiliation': null,
+      'faculty': null,
+      'KKUStudentID': null,
+      'registerPoster': this.isPoster,
+      'posterTeam': null, 
+      'registerMovie': this.isMovie,
+      'movieTeam': null,
+      'registerCosplay': this.isCosplay,
+      'nickname':null,
+      'refCharacter':null,
+      'registerROV': this.isRov,
+      'ROVTeam':null,
     });
   }
 
