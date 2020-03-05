@@ -11,8 +11,4 @@
     <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy /S /E /Y ..\mana-ic-web\www wwwroot" />
-  </Target>
-
 </Project>
