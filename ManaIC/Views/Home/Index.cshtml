@@ -4,9 +4,6 @@
     ViewData["Title"] = "Index";
 }
 <script>
-    function AutoCalculateMandateOnChange(element) {
-        element.checked ? document.getElementById("LevyFee").disabled = true : document.getElementById("LevyFee").disabled = false;
-    }
     function CheckBoxOnChange() {
         guest = document.getElementById("@Html.Raw(StatusEN.Guest)").checked;
         student = document.getElementById("@Html.Raw(StatusEN.Student)").checked;
@@ -21,30 +18,25 @@
         mar10 = document.getElementById("March10").checked;
         mar11 = document.getElementById("March11").checked;
         books = document.querySelectorAll("tr[id]");
-        var hiddenAll = (!mar9 && !mar10 && !mar11) || (!rov && !movie && !poster && !cosplay && !outline) || (!guest && !student && !scholar && !scholarKKU);
         books.forEach(book => {
             var statusDisplay = false;
             var eventDisplay = false;
             var dayDisplay = false;
-            console.log(book.id)
-            if (!hiddenAll) {
-                if (guest && book.id.indexOf("status:@Html.Raw(StatusEN.Guest)") != -1) statusDisplay = true;
-                if(student && book.id.indexOf("status:@Html.Raw(StatusEN.Student)") != -1) statusDisplay = true;
-                if(scholar && book.id.indexOf("status:@Html.Raw(StatusEN.Scholar)") != -1 && book.id.indexOf("affiliation:มหาวิทยาลัยขอนแก่น") == -1) statusDisplay = true;
-                if (scholarKKU && book.id.indexOf("affiliation:มหาวิทยาลัยขอนแก่น") != -1) statusDisplay = true;
-
-                if (rov && book.id.indexOf("registerROV:true") != -1) eventDisplay = true;
-                if (movie && book.id.indexOf("registerMovie:true") != -1) eventDisplay = true;
-                if (poster && book.id.indexOf("registerPoster:true") != -1) eventDisplay = true;
-                if (cosplay && book.id.indexOf("registerCosplay:true") != -1) eventDisplay = true;
-                if (outline && book.id.indexOf("registerROV:false") != -1 &&
-                    book.id.indexOf("registerMovie:false") != -1 &&
-                    book.id.indexOf("registerPoster:false") != -1 &&
-                    book.id.indexOf("registerCosplay:false") != -1) eventDisplay = true;
-                if(mar9 && book.id.indexOf("firstDate:null") == -1) dayDisplay = true;
-                if(mar10 && book.id.indexOf("secondDate:null") == -1) dayDisplay = true;
-                if (mar11 && book.id.indexOf("thirdDate:null") == -1) dayDisplay = true;
-            }
+            if (guest && book.id.indexOf("status:@Html.Raw(StatusEN.Guest)") != -1) statusDisplay = true;
+            if (student && book.id.indexOf("status:@Html.Raw(StatusEN.Student)") != -1) statusDisplay = true;
+            if (scholar && book.id.indexOf("status:@Html.Raw(StatusEN.Scholar)") != -1 && book.id.indexOf("affiliation:มหาวิทยาลัยขอนแก่น") == -1) statusDisplay = true;
+            if (scholarKKU && book.id.indexOf("status:@Html.Raw(StatusEN.Scholar)") != -1 && book.id.indexOf("affiliation:มหาวิทยาลัยขอนแก่น") != -1) statusDisplay = true;
+            if (rov && book.id.indexOf("registerROV:true") != -1) eventDisplay = true;
+            if (movie && book.id.indexOf("registerMovie:true") != -1) eventDisplay = true;
+            if (poster && book.id.indexOf("registerPoster:true") != -1) eventDisplay = true;
+            if (cosplay && book.id.indexOf("registerCosplay:true") != -1) eventDisplay = true;
+            if (outline && book.id.indexOf("registerROV:false") != -1 &&
+                book.id.indexOf("registerMovie:false") != -1 &&
+                book.id.indexOf("registerPoster:false") != -1 &&
+                book.id.indexOf("registerCosplay:false") != -1) eventDisplay = true;
+            if (mar9 && book.id.indexOf("firstDate:null") == -1) dayDisplay = true;
+            if (mar10 && book.id.indexOf("secondDate:null") == -1) dayDisplay = true;
+            if (mar11 && book.id.indexOf("thirdDate:null") == -1) dayDisplay = true;
             book.hidden = statusDisplay && eventDisplay && dayDisplay ? false : true;
         });
     }
