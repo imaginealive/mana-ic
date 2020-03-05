@@ -173,13 +173,13 @@
                     @Html.DisplayFor(modelItem => item.PosterTeam)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstDate)
+                    @Html.Raw(item.FirstDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SecondDate)
+                    @Html.Raw(item.SecondDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ThirdDate)
+                    @Html.Raw(item.ThirdDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
                 </td>
             </tr>
         }
