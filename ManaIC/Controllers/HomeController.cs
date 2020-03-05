@@ -5,14 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ManaIC.Models;
+using ManaIC.Repositories.Contracts;
 
 namespace ManaIC.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IDataDac<BookList> booklistDac;
+
+        public HomeController(IDataDac<BookList> booklistDac) {
+            this.booklistDac = booklistDac;
+        }
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var response = await booklistDac.Gets(it => !it.DeleteDate.HasValue);
+            return View(response);
         }
 
         public IActionResult About()

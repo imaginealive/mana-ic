@@ -38,10 +38,23 @@ namespace ManaIC.Controllers
 
         // GET: api/ServiceAPI/get?memberid=5
         [HttpGet("get")]
-        public async Task<BookList> Get(string memberid)
+        public async Task<BookListOnFront> Get(string memberid)
         {
-            var response = await booklistDac.Get(it => it.Id == memberid && !it.DeleteDate.HasValue);
-            if (response == null) response = new BookList { Id = memberid };
+            var response = new BookListOnFront { };
+            response.Book = await booklistDac.Get(it => it.Id == memberid && !it.DeleteDate.HasValue);
+            if (response.Book == null)
+            {
+                response.Book = new BookList { Id = memberid };
+                response.SubmitButtonText = "สมัคร";
+            }
+            else
+            {
+                DateTime dateTH = DateTime.UtcNow.AddHours(7);
+                var isFirstDate = dateTH.Date == response.Book.FirstDate.Value.AddHours(7).Date;
+                var isSecondDate = dateTH.Date == response.Book.ThirdDate.Value.AddHours(7).Date;
+                var isThirdDate = dateTH.Date == response.Book.SecondDate.Value.AddHours(7).Date;
+                response.SubmitButtonText = isFirstDate || isSecondDate || isThirdDate ? "แก้ไข" : "เข้าร่วมงาน";
+            }
             return response;
         }
 
@@ -49,12 +62,14 @@ namespace ManaIC.Controllers
         [HttpPost()]
         public async Task Post(BookList request)
         {
-            DateTime? dateTH = DateTime.UtcNow.AddHours(7);
-            request.FirstDate = FirstDate == dateTH.Value.Date ? dateTH : null;
-            request.SecondDate = SecondDate == dateTH.Value.Date ? dateTH : null;
-            request.ThirdDate = ThirdDate == dateTH.Value.Date ? dateTH : null;
+            DateTime? dateNow = DateTime.UtcNow;
+            DateTime? dateTH = dateNow.Value.AddHours(7);
+            request.FirstDate = FirstDate == dateTH.Value.Date ? dateNow : null;
+            request.SecondDate = SecondDate == dateTH.Value.Date ? dateNow : null;
+            request.ThirdDate = ThirdDate == dateTH.Value.Date ? dateNow : null;
             var book = await booklistDac.Get(it => it.Id == request.Id);
-            if (book == null) {
+            if (book == null)
+            {
                 request.CreateDate = DateTime.UtcNow;
                 await booklistDac.Create(request);
             }

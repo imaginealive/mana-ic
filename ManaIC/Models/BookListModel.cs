@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace ManaIC.Models
 {
+    public class BookListOnFront
+    {
+        public BookList Book { get; set; }
+        public string SubmitButtonText { get; set; }
+    }
     public class BookList
     {
         public string Id { get; set; }
@@ -30,10 +35,17 @@ namespace ManaIC.Models
         public DateTime? ThirdDate { get; set; }
     }
 
-    public class Status
+    public class StatusEN
     {
-        public string Student = "Student";
-        public string Scholar = "Scholar";
-        public string Guest = "Guest";
+        public static string Student = "Student";
+        public static string Scholar = "Scholar";
+        public static string Guest = "Guest";
+    }
+
+    public class StatusTH
+    {
+        public static string Student = "นักเรียน";
+        public static string Scholar = "นักศีกษา";
+        public static string Guest = "ทั่วไป";
     }
 }
