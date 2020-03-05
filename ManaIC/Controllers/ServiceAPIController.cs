@@ -50,9 +50,9 @@ namespace ManaIC.Controllers
             else
             {
                 DateTime dateTH = DateTime.UtcNow.AddHours(7);
-                var isFirstDate = dateTH.Date == response.Book.FirstDate.Value.AddHours(7).Date;
-                var isSecondDate = dateTH.Date == response.Book.ThirdDate.Value.AddHours(7).Date;
-                var isThirdDate = dateTH.Date == response.Book.SecondDate.Value.AddHours(7).Date;
+                var isFirstDate = response.Book.FirstDate.HasValue && dateTH.Date == response.Book.FirstDate.Value.AddHours(7).Date;
+                var isSecondDate = response.Book.SecondDate.HasValue &&  dateTH.Date == response.Book.SecondDate.Value.AddHours(7).Date;
+                var isThirdDate = response.Book.ThirdDate.HasValue &&  dateTH.Date == response.Book.ThirdDate.Value.AddHours(7).Date;
                 response.SubmitButtonText = isFirstDate || isSecondDate || isThirdDate ? "แก้ไข" : "เข้าร่วมงาน";
             }
             return response;
