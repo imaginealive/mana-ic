@@ -15,9 +15,12 @@ export class RegisterPage implements OnInit {
   Student: string = "Student";
   Scholar: string = "Scholar";
   Guest: string = "Guest";
-  universityType: string;
+  affiliationName: string;
+  facultyName: string;
+  kkuStudentID: string;
   kku: string = "kku";
   other: string = "other";
+  isKKU: Boolean = false;
   isPoster: Boolean = false;
   isMovie: Boolean = false;
   isCosplay: Boolean = false;
@@ -28,9 +31,9 @@ export class RegisterPage implements OnInit {
       'nameTH': [null, Validators.required],
       'status': [this.statusType, Validators.required],
       'nameEN': this.engName,
-      'affiliation': null,
-      'faculty': null,
-      'KKUStudentID': null,
+      'affiliation': this.affiliationName,
+      'faculty': this.facultyName,
+      'KKUStudentID': this.kkuStudentID,
       'registerPoster': this.isPoster,
       'posterTeam': null,
       'registerMovie': this.isMovie,
@@ -45,31 +48,37 @@ export class RegisterPage implements OnInit {
 
   async ngOnInit() { }
 
+  statusCheck() {
+      this.affiliationName = null;
+      this.facultyName = null;
+      this.kkuStudentID = null;
+    }
+  
+
+  universityCheck(event) {
+    if (event.target.value == this.kku) {
+      this.isKKU = true;
+      this.affiliationName = "มหาวิทยาลัยขอนแก่น";
+    }
+    else {
+      this.isKKU = false;
+      this.affiliationName = null;
+      this.facultyName = null;
+      this.kkuStudentID = null;
+    }
+  }
+
+
+
   submit() {
     if (this.fg.valid) {
       this.registerSvc.createRegister(this.fg.value).then(data => {
         console.log(data);
-        }, error => {
-          console.log(error);
-        });
+      }, error => {
+        console.log(error);
+      });
       ;
     }
-
-    // if (this.fg.valid) {
-
-
-    //   var headers = new Headers();
-    //   headers.append("Accept", 'application/json');
-    //   headers.append('Content-Type', 'application/json');
-
-    //   this.httpClient.post("https://localhost:44314/api/serviceapi", this.fg.value)
-    //     .subscribe(data => {
-    //       console.log(data['_body']);
-    //     }, error => {
-    //       console.log(error);
-    //     });
-    // }
   }
-
 
 }

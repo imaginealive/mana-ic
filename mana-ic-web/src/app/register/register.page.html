@@ -14,7 +14,7 @@
         <ion-label position="stacked" mode="ios">ชื่อ-นามสกุล (ภาษาไทย)</ion-label>
         <ion-input type="text" formControlName="nameTH"></ion-input>
       </ion-item>
-      <ion-radio-group formControlName="status" [(ngModel)]="statusType">
+      <ion-radio-group formControlName="status" [(ngModel)]="statusType" (ionChange)="statusCheck()">
         <ion-list-header>
           <ion-label>ประเภท</ion-label>
         </ion-list-header>
@@ -31,10 +31,12 @@
           <ion-radio slot="start" value="Guest"></ion-radio>
         </ion-item>
       </ion-radio-group>
-      <!-- <ion-radio-group *ngIf="statusType == Student || statusType == Scholar">
-        <ion-list-header>
-          <ion-label>สถาบันการศึกษา</ion-label>
-        </ion-list-header>
+
+      <ion-list-header *ngIf="statusType == Scholar || statusType == Student">
+        <ion-label>สถาบันการศึกษา</ion-label>
+      </ion-list-header>
+
+      <ion-radio-group *ngIf="statusType == Scholar" (ionChange)="universityCheck($event)">
         <ion-item>
           <ion-label>มหาวิทยาลัยขอนแก่น</ion-label>
           <ion-radio slot="start" value="kku"></ion-radio>
@@ -43,18 +45,18 @@
           <ion-label>สถาบันการศึกษา อื่นๆ</ion-label>
           <ion-radio slot="start" value="other"></ion-radio>
         </ion-item>
-      </ion-radio-group> -->
+      </ion-radio-group>
       <ion-item mode="ios" *ngIf="statusType == Student || statusType == Scholar">
         <ion-label position="stacked" mode="ios">ชื่อสถาบันการศึกษา</ion-label>
-        <ion-input type="text" formControlName="affiliation"></ion-input>
+        <ion-input type="text" formControlName="affiliation" [(ngModel)]="affiliationName"></ion-input>
       </ion-item>
-      <ion-item mode="ios" *ngIf="statusType == Scholar">
+      <ion-item mode="ios" *ngIf="statusType == Scholar && isKKU">
         <ion-label position="stacked" mode="ios">คณะ และ สาขา</ion-label>
-        <ion-input type="text" formControlName="faculty"></ion-input>
+        <ion-input type="text" formControlName="faculty" [(ngModel)]="facultyName"></ion-input>
       </ion-item>
-      <ion-item mode="ios" *ngIf="statusType == Scholar">
+      <ion-item mode="ios" *ngIf="statusType == Scholar && isKKU">
         <ion-label position="stacked" mode="ios">รหัสนักศึกษา</ion-label>
-        <ion-input type="text" formControlName="KKUStudentID"></ion-input>
+        <ion-input type="text" formControlName="KKUStudentID" [(ngModel)]="kkuStudentID"></ion-input>
       </ion-item>
 
       <ion-item mode="ios" class="ion-padding-top">
@@ -101,14 +103,14 @@
       </ion-item>
 
       <ion-item mode="ios">
-        <ion-checkbox color="danger" formControlName="registerROV" [(ngModel)]="isROV"></ion-checkbox>
+        <ion-checkbox color="danger" formControlName="registerROV" [(ngModel)]="isRov"></ion-checkbox>
         <ion-label mode="ios">แข่งขัน CA Showcase ROV Competition</ion-label>
       </ion-item>
-      <ion-item mode="ios" [hidden]="!isROV">
+      <ion-item mode="ios" [hidden]="!isRov">
         <ion-label position="stacked" mode="ios">ชื่อ-นามสกุล (ภาษาอังกฤษ)</ion-label>
         <ion-input type="text" formControlName="nameEN" [(ngModel)]="engName"></ion-input>
       </ion-item>
-      <ion-item mode="ios" [hidden]="!isROV">
+      <ion-item mode="ios" [hidden]="!isRov">
         <ion-label position="stacked" mode="ios">ชื่อทีม</ion-label>
         <ion-input type="text" formControlName="ROVTeam"></ion-input>
       </ion-item>
