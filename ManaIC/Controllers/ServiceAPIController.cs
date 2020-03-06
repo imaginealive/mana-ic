@@ -18,12 +18,15 @@ namespace ManaIC.Controllers
         private readonly DateTime ThirdDate;
         private readonly IDataDac<BookList> booklistDac;
 
-        public ServiceAPIController(IDataDac<BookList> booklistDac)
+        public ServiceAPIController(
+            IDataDac<BookList> booklistDac,
+            WebConfig webConfig
+            )
         {
             this.booklistDac = booklistDac;
-            FirstDate = new DateTime(2020, 3, 9);
-            SecondDate = new DateTime(2020, 3, 10);
-            ThirdDate = new DateTime(2020, 3, 11);
+            FirstDate = new DateTime(webConfig.Year, webConfig.Month, webConfig.Day1);
+            SecondDate = new DateTime(webConfig.Year, webConfig.Month, webConfig.Day2);
+            ThirdDate = new DateTime(webConfig.Year, webConfig.Month, webConfig.Day3);
             //thailand time
             //var date = DateTime.UtcNow.AddHours(7);
         }
@@ -51,8 +54,8 @@ namespace ManaIC.Controllers
             {
                 DateTime dateTH = DateTime.UtcNow.AddHours(7);
                 var isFirstDate = response.Book.FirstDate.HasValue && dateTH.Date == response.Book.FirstDate.Value.AddHours(7).Date;
-                var isSecondDate = response.Book.SecondDate.HasValue &&  dateTH.Date == response.Book.SecondDate.Value.AddHours(7).Date;
-                var isThirdDate = response.Book.ThirdDate.HasValue &&  dateTH.Date == response.Book.ThirdDate.Value.AddHours(7).Date;
+                var isSecondDate = response.Book.SecondDate.HasValue && dateTH.Date == response.Book.SecondDate.Value.AddHours(7).Date;
+                var isThirdDate = response.Book.ThirdDate.HasValue && dateTH.Date == response.Book.ThirdDate.Value.AddHours(7).Date;
                 response.SubmitButtonText = isFirstDate || isSecondDate || isThirdDate ? "แก้ไข" : "เข้าร่วมงาน";
             }
             return response;
