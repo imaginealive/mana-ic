@@ -12,8 +12,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy /S /E /Y ..\mana-ic-web\www wwwroot" />
-  </Target>
-
 </Project>

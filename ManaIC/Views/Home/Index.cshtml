@@ -1,5 +1,187 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<ManaIC.Models.BookList>
 
-<app-root></app-root>
+@{
+    ViewData["Title"] = "Index";
+}
+<script>
+    function CheckBoxOnChange() {
+        guest = document.getElementById("@Html.Raw(StatusEN.Guest)").checked;
+        student = document.getElementById("@Html.Raw(StatusEN.Student)").checked;
+        scholar = document.getElementById("@Html.Raw(StatusEN.Scholar)").checked;
+        scholarKKU = document.getElementById("@Html.Raw(StatusEN.Scholar)KKU").checked;
+        rov = document.getElementById("@Html.DisplayNameFor(model => model.ROVTeam)").checked;
+        movie = document.getElementById("@Html.DisplayNameFor(model => model.MovieTeam)").checked;
+        poster = document.getElementById("@Html.DisplayNameFor(model => model.PosterTeam)").checked;
+        cosplay = document.getElementById("Cosplay").checked;
+        outline = document.getElementById("Outline").checked;
+        mar9 = document.getElementById("March9").checked;
+        mar10 = document.getElementById("March10").checked;
+        mar11 = document.getElementById("March11").checked;
+        books = document.querySelectorAll("tr[id]");
+        books.forEach(book => {
+            var statusDisplay = false;
+            var eventDisplay = false;
+            var dayDisplay = false;
+            if (guest && book.id.indexOf("status:@Html.Raw(StatusEN.Guest)") != -1) statusDisplay = true;
+            if (student && book.id.indexOf("status:@Html.Raw(StatusEN.Student)") != -1) statusDisplay = true;
+            if (scholar && book.id.indexOf("status:@Html.Raw(StatusEN.Scholar)") != -1 && book.id.indexOf("affiliation:มหาวิทยาลัยขอนแก่น") == -1) statusDisplay = true;
+            if (scholarKKU && book.id.indexOf("status:@Html.Raw(StatusEN.Scholar)") != -1 && book.id.indexOf("affiliation:มหาวิทยาลัยขอนแก่น") != -1) statusDisplay = true;
+            if (rov && book.id.indexOf("registerROV:true") != -1) eventDisplay = true;
+            if (movie && book.id.indexOf("registerMovie:true") != -1) eventDisplay = true;
+            if (poster && book.id.indexOf("registerPoster:true") != -1) eventDisplay = true;
+            if (cosplay && book.id.indexOf("registerCosplay:true") != -1) eventDisplay = true;
+            if (outline && book.id.indexOf("registerROV:false") != -1 &&
+                book.id.indexOf("registerMovie:false") != -1 &&
+                book.id.indexOf("registerPoster:false") != -1 &&
+                book.id.indexOf("registerCosplay:false") != -1) eventDisplay = true;
+            if (mar9 && book.id.indexOf("firstDate:null") == -1) dayDisplay = true;
+            if (mar10 && book.id.indexOf("secondDate:null") == -1) dayDisplay = true;
+            if (mar11 && book.id.indexOf("thirdDate:null") == -1) dayDisplay = true;
+            book.hidden = statusDisplay && eventDisplay && dayDisplay ? false : true;
+        });
+    }
+</script>
+<h2>รายชื่อคนเข้าร่วมงาน</h2>
+
+<div class="custom-control custom-checkbox">
+    <label class="custom-control-label">
+        ประเภทผู้เข้าร่วม
+    </label>
+    <input type="checkbox" class="custom-control-input" id="@Html.Raw(StatusEN.Guest)" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.Raw(StatusEN.Guest)">@Html.Raw(StatusTH.Guest)</label>
+    <input type="checkbox" class="custom-control-input" id="@Html.Raw(StatusEN.Student)" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.Raw(StatusEN.Student)">@Html.Raw(StatusTH.Student)</label>
+    <input type="checkbox" class="custom-control-input" id="@Html.Raw(StatusEN.Scholar)KKU" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.Raw(StatusEN.Scholar)KKU">นักศึกษามหาวิทยาลัยขอนแก่น</label>
+    <input type="checkbox" class="custom-control-input" id="@Html.Raw(StatusEN.Scholar)" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.Raw(StatusEN.Scholar)">นักศึกษามหาวิทยาลัยอื่น</label>
+</div>
+<div class="custom-control custom-checkbox">
+    <label class="custom-control-label">
+        เข้าร่วมกิจกรรมแข่งขัน
+    </label>
+    <input type="checkbox" class="custom-control-input" id="@Html.DisplayNameFor(model => model.ROVTeam)" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.DisplayNameFor(model => model.ROVTeam)">ROV</label>
+    <input type="checkbox" class="custom-control-input" id="@Html.DisplayNameFor(model => model.MovieTeam)" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.DisplayNameFor(model => model.MovieTeam)">Movie</label>
+    <input type="checkbox" class="custom-control-input" id="@Html.DisplayNameFor(model => model.PosterTeam)" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="@Html.DisplayNameFor(model => model.PosterTeam)">Poster</label>
+    <input type="checkbox" class="custom-control-input" id="Cosplay" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="Cosplay">Cosplay</label>
+    <input type="checkbox" class="custom-control-input" id="Outline" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="Outline">ไม่ได้ร่วมรายการแข่ง</label>
+</div>
+<div class="custom-control custom-checkbox">
+    <label class="custom-control-label">
+        เข้าร่วมงานวันที่
+    </label>
+    <input type="checkbox" class="custom-control-input" id="March9" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="March9">9 มีนาคม</label>
+    <input type="checkbox" class="custom-control-input" id="March10" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="March10">10 มีนาคม</label>
+    <input type="checkbox" class="custom-control-input" id="March11" checked onchange="CheckBoxOnChange()">
+    <label class="custom-control-label" for="March11">11 มีนาคม</label>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameTH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameEN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Affiliation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faculty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KKUStudentID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ROVTeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nickname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefCharacter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieTeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PosterTeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecondDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThirdDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="@Html.Raw(Json.Serialize(item).ToString().Replace("\"", string.Empty))">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameTH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameEN)
+                </td>
+                <td>
+                    @Html.Raw(item.Status == StatusEN.Student ? StatusTH.Student : item.Status == StatusEN.Scholar ? StatusTH.Scholar : StatusTH.Guest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Affiliation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Faculty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KKUStudentID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ROVTeam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nickname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RefCharacter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieTeam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PosterTeam)
+                </td>
+                <td>
+                    @Html.Raw(item.FirstDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
+                </td>
+                <td>
+                    @Html.Raw(item.SecondDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
+                </td>
+                <td>
+                    @Html.Raw(item.ThirdDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
