@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ManaIC.Models;
 using ManaIC.Repositories.Contracts;
 using ManaIC.Repositories;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ManaIC
 {
@@ -37,6 +38,11 @@ namespace ManaIC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "ManaIC", Version = "v1" });
+            });
+
             var webConfig = Configuration.GetSection(nameof(WebConfig)).Get<WebConfig>();
             var dbConfig = Configuration.GetSection(nameof(DbConfig)).Get<DbConfig>();
             services.AddTransient(it => dbConfig);
@@ -60,6 +66,12 @@ namespace ManaIC
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ManaIC API V1");
+            });
 
             app.UseMvc(routes =>
             {

@@ -1,38 +1,24 @@
 ﻿@{
     var url = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}");
+
+    if (System.IO.File.Exists("wwwroot/index.html"))
+    {
+        var indexFile = System.IO.File.ReadAllText("wwwroot/index.html");
+        var contents = indexFile.Split("<app-root></app-root>");
+        @Html.Raw(contents[0])
+        @RenderBody()
+        @Html.Raw(contents[1])
+    }
+    else
+    {
+        <br />
+        <br />
+        @RenderBody()
+        <h1 style="text-align:center">
+            Can not find index.html
+            <br />
+            <a href="swagger">Swagger</a>
+        </h1>
+
+    }
 }
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Ionic App</title>
-
-    <base href="/" />
-
-    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-
-    <link rel="icon" type="image/png" href="@(url)assets/icon/favicon.png" />
-
-    <!-- add to homescreen for ios -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-</head>
-
-<body>
-    @RenderBody()
-    <script src="@(url)runtime-es2015.js" type="module"></script>
-    <script src="@(url)runtime-es5.js" nomodule defer></script>
-    <script src="@(url)polyfills-es5.js" nomodule defer></script>
-    <script src="@(url)polyfills-es2015.js" type="module"></script>
-    <script src="@(url)styles-es2015.js" type="module"></script>
-    <script src="@(url)styles-es5.js" nomodule defer></script>
-    <script src="@(url)vendor-es2015.js" type="module"></script>
-    <script src="@(url)vendor-es5.js" nomodule defer></script>
-    <script src="@(url)main-es2015.js" type="module"></script>
-    <script src="@(url)main-es5.js" nomodule defer></script>
-</body>
-
-</html>
