@@ -22,6 +22,11 @@ namespace ManaIC.Controllers
             return View(response);
         }
 
+        public IActionResult Qr()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
