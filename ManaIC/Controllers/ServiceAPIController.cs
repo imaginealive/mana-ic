@@ -67,6 +67,12 @@ namespace ManaIC.Controllers
         {
             DateTime? dateNow = DateTime.UtcNow;
             DateTime? dateTH = dateNow.Value.AddHours(7);
+            request.Nickname = request.RegisterCosplay ? request.Nickname : null;
+            request.RefCharacter = request.RegisterCosplay ? request.RefCharacter : null;
+            request.MovieTeam = request.RegisterMovie ? request.MovieTeam : null;
+            request.PosterTeam = request.RegisterPoster ? request.PosterTeam : null;
+            request.ROVTeam = request.RegisterROV ? request.ROVTeam : null;
+
             request.FirstDate = FirstDate == dateTH.Value.Date ? dateNow : null;
             request.SecondDate = SecondDate == dateTH.Value.Date ? dateNow : null;
             request.ThirdDate = ThirdDate == dateTH.Value.Date ? dateNow : null;
