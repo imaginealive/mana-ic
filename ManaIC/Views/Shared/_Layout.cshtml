@@ -1,24 +1,60 @@
 ﻿@{
     var url = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}");
-
-    if (System.IO.File.Exists("wwwroot/index.html"))
-    {
-        var indexFile = System.IO.File.ReadAllText("wwwroot/index.html");
-        var contents = indexFile.Split("<app-root></app-root>");
-        @Html.Raw(contents[0])
-        @RenderBody()
-        @Html.Raw(contents[1])
-    }
-    else
-    {
-        <br />
-        <br />
-        @RenderBody()
-        <h1 style="text-align:center">
-            Can not find index.html
-            <br />
-            <a href="swagger">Swagger</a>
-        </h1>
-
-    }
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ManaIC</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+              asp-fallback-href="@(url)lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="@(url)/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ManaIC</a>
+            </div>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2020 - ManaIC</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="@(url)/lib/jquery/dist/jquery.js"></script>
+        <script src="@(url)/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="@(url)/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
