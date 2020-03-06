@@ -89,46 +89,46 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NameTH)
+                ชื่อภาษาไทย
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NameEN)
+                ชื่อภาษาอังกฤษ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                สถานะ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Affiliation)
+                โรงเรียน/มหาวิทยาลัย
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Faculty)
+                คณะ/สาขา
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.KKUStudentID)
+                รหัสประจำตัวนักศึกษา
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ROVTeam)
+                ทีม ROV
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nickname)
+                ชื่อเล่น Cosplayer
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RefCharacter)
+                ตัวละคร/เรื่อง
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MovieTeam)
+                ทีม Movie
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PosterTeam)
+                ทีม Poster
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstDate)
+                9 มีนาคม
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SecondDate)
+                10 มีนาคม
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThirdDate)
+                11 มีนาคม
             </th>
         </tr>
     </thead>
@@ -173,13 +173,13 @@
                     @Html.DisplayFor(modelItem => item.PosterTeam)
                 </td>
                 <td>
-                    @Html.Raw(item.FirstDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
+                    @Html.Raw(item.FirstDate.HasValue ? "/" : "")
                 </td>
                 <td>
-                    @Html.Raw(item.SecondDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
+                    @Html.Raw(item.SecondDate.HasValue ? "/" : "")
                 </td>
                 <td>
-                    @Html.Raw(item.ThirdDate.HasValue ? "<span class='glyphicon glyphicon-ok'></span>" : "")
+                    @Html.Raw(item.ThirdDate.HasValue ? "/" : "")
                 </td>
             </tr>
         }
