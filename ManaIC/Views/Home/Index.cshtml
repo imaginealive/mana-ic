@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var i = 1;
 }
 <script>
     function CheckBoxOnChange() {
@@ -82,9 +83,11 @@
     <input type="checkbox" class="custom-control-input" id="March11" checked onchange="CheckBoxOnChange()">
     <label class="custom-control-label" for="March11">11 มีนาคม</label>
 </div>
+<h4>ลงทะเบียนแล้ว : @Model.Count() คน</h4>
 <table class="table">
     <thead>
         <tr>
+            <th>No.</th>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
@@ -122,13 +125,13 @@
                 ทีม Poster
             </th>
             <th>
-                9 มีนาคม
+                9 มีค
             </th>
             <th>
-                10 มีนาคม
+                10 มีค
             </th>
             <th>
-                11 มีนาคม
+                11 มีค
             </th>
         </tr>
     </thead>
@@ -136,6 +139,7 @@
         @foreach (var item in Model)
         {
             <tr id="@Html.Raw(Json.Serialize(item).ToString().Replace("\"", string.Empty))">
+                <td>@(i++)</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
