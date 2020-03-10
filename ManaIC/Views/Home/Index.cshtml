@@ -19,6 +19,7 @@
         mar10 = document.getElementById("March10").checked;
         mar11 = document.getElementById("March11").checked;
         books = document.querySelectorAll("tr[id]");
+        var count = 0;
         books.forEach(book => {
             var statusDisplay = false;
             var eventDisplay = false;
@@ -39,7 +40,12 @@
             if (mar10 && book.id.indexOf("secondDate:null") == -1) dayDisplay = true;
             if (mar11 && book.id.indexOf("thirdDate:null") == -1) dayDisplay = true;
             book.hidden = statusDisplay && eventDisplay && dayDisplay ? false : true;
+
+            if (!book.hidden) {
+                count++;
+            }
         });
+        $("#filteredCount").html(count);
     }
 </script>
 <h2>รายชื่อคนเข้าร่วมงาน</h2>
@@ -83,7 +89,8 @@
     <input type="checkbox" class="custom-control-input" id="March11" checked onchange="CheckBoxOnChange()">
     <label class="custom-control-label" for="March11">11 มีนาคม</label>
 </div>
-<h4>ลงทะเบียนแล้ว : @Model.Count() คน</h4>
+<h4>ลงทะเบียนแล้วทั้งหมด : @Model.Count() คน</h4>
+<h4>จำนวนที่แสดงในตาราง : <span id="filteredCount">@Model.Count()</span> คน</h4>
 <table class="table">
     <thead>
         <tr>
