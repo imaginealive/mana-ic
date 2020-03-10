@@ -43,6 +43,11 @@
 
             if (!book.hidden) {
                 count++;
+
+                var filteredBooks = book.querySelectorAll(".td_index");
+                filteredBooks.forEach(filteredBook => {
+                    $(filteredBook).html(count);
+                });
             }
         });
         $("#filteredCount").html(count);
@@ -146,7 +151,7 @@
         @foreach (var item in Model)
         {
             <tr id="@Html.Raw(Json.Serialize(item).ToString().Replace("\"", string.Empty))">
-                <td>@(i++)</td>
+                <td class="td_index">@(i++)</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
