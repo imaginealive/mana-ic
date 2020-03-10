@@ -73,9 +73,10 @@ namespace ManaIC.Controllers
             request.PosterTeam = request.RegisterPoster ? request.PosterTeam : null;
             request.ROVTeam = request.RegisterROV ? request.ROVTeam : null;
 
-            request.FirstDate = FirstDate == dateTH.Value.Date ? dateNow : null;
-            request.SecondDate = SecondDate == dateTH.Value.Date ? dateNow : null;
-            request.ThirdDate = ThirdDate == dateTH.Value.Date ? dateNow : null;
+            if (FirstDate == dateTH.Value.Date) request.FirstDate = dateNow;
+            if (SecondDate == dateTH.Value.Date) request.SecondDate = dateNow;
+            if (ThirdDate == dateTH.Value.Date) request.ThirdDate = dateNow;
+
             var book = await booklistDac.Get(it => it.Id == request.Id);
             if (book == null)
             {
