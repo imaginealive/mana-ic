@@ -84,8 +84,29 @@ namespace ManaIC.Controllers
                 await booklistDac.Create(request);
             }
             else
-                await booklistDac.Update(request);
+            {
+                book.NameTH = request.NameTH;
+                book.NameEN = request.NameEN;
+                book.Status = request.Status;
+                book.Affiliation = request.Affiliation;
+                book.Faculty = request.Faculty;
+                book.KKUStudentID = request.KKUStudentID;
+                book.RegisterROV = request.RegisterROV;
+                book.ROVTeam = request.ROVTeam;
+                book.RegisterCosplay = request.RegisterCosplay;
+                book.Nickname = request.Nickname;
+                book.RefCharacter = request.RefCharacter;
+                book.RegisterMovie = request.RegisterMovie;
+                book.MovieTeam = request.MovieTeam;
+                book.RegisterPoster = request.RegisterPoster;
+                book.PosterTeam = request.PosterTeam;
 
+                if (FirstDate == dateTH.Value.Date) book.FirstDate = dateNow;
+                if (SecondDate == dateTH.Value.Date) book.SecondDate = dateNow;
+                if (ThirdDate == dateTH.Value.Date) book.ThirdDate = dateNow;
+
+                await booklistDac.Update(book);
+            }
         }
 
         // PUT: api/ServiceAPI/5
